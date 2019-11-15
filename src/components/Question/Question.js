@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Question({ quest, setStopTime }) {
+function Question({ quest, handleClick}) {
 
   const decodeHTML = (html) => {
     let txt = document.createElement('textarea');
@@ -19,12 +19,9 @@ function Question({ quest, setStopTime }) {
     }
 
     let answers = []
-    answers.push(<button onClick={() => {
-      alert('Correct')
-      setStopTime(Date.now())
-    }}>{decodeHTML(quest.correct_answer)}</button>)
+    answers.push(<button onClick={() => handleClick(true)}>{decodeHTML(quest.correct_answer)}</button>)
     for (let ans of quest.incorrect_answers){
-    answers.push(<button onClick={() => alert('Wrong')}>{decodeHTML(ans)}</button>)
+    answers.push(<button onClick={() => handleClick(false)}>{decodeHTML(ans)}</button>)
     }
     shuffle(answers)
     return answers
