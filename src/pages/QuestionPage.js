@@ -22,7 +22,7 @@ const QuestionPage = (props) => {
   }
 
   const nextQuestion = async () => {
-    (currentQuestion === questions.length - 1) ? setCurrentQuestion(currentQuestion) : setCurrentQuestion(currentQuestion + 1)
+    (currentQuestion === questions.length - 1) ? props.history.push('/') : setCurrentQuestion(currentQuestion + 1)
     setAnswered(false)
     setStopTime(null)
     setStartTime(Date.now())
@@ -52,7 +52,7 @@ const QuestionPage = (props) => {
       <h2>Question Page</h2>
       {questions && <Question key={currentQuestion} handleClick={handleClick} quest={questions[currentQuestion]}/>}
   {answered && <><p>You answered in {(stopTime-startTime) / 1000} seconds</p>
-  <button onClick={() => nextQuestion()}>Next Question</button></>}
+  <button onClick={() => nextQuestion()}>{(currentQuestion === questions.length - 1) ? <>New Game</> : <>Next Question</>}</button></>}
     </div>
   )
 }
