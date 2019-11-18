@@ -58,7 +58,6 @@ const QuestionPage = (props) => {
 
   return (
     <div>
-      <h2>Question Page</h2>
       {(questions && !answered) ? 
       <Question key={currentQuestion} handleClick={handleClick} quest={questions[currentQuestion]} /> :
       <Answer key={currentQuestion} answerInfo={score[currentQuestion]} />}

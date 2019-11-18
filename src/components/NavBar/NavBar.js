@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import navbar from '../../config/navbar.json'
 
-function NavBar() {
+function NavBar(props) {
   const createNavItems = () => {
     return navbar.map((section, index) => {
       return (
-        <b key={index}><a href="#">{section.label} | </a></b> 
+        <b key={index}><Link to={section.value}>{section.label} | </Link></b> 
       )
     })
   }
@@ -15,7 +15,7 @@ function NavBar() {
     <div>
       <nav>
         { createNavItems() }
-        <b><Link to='/'>NEW GAME</Link></b>
+        <b><Link to='/'>{props.user ? 'NEW GAME': 'LOGIN'}</Link></b>
       </nav>
     </div>
   )
