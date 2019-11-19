@@ -8,6 +8,7 @@ import RecordsPage from './pages/RecordsPage'
 import PersonalRecordsPage from './pages/PersonalRecordsPage'
 import StatisticsPage from './pages/StatisticsPage'
 import NavBar from './components/NavBar/NavBar'
+import RegistrationPage from './pages/RegistrationPage'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -29,6 +30,7 @@ function App() {
           <Route path='/global_records' component={RecordsPage} />
           <Route path='/personal_records' render={(props) => <PersonalRecordsPage {...props} user={user} />} />
           <Route path='/statistics' component={StatisticsPage} />
+          <Route path='/register' render={(props) => <RegistrationPage {...props} setUser={setUser} />} />
           
         </div>
       </Router>

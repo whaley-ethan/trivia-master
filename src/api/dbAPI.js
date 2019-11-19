@@ -1,40 +1,35 @@
 const login = async (loginObject) => {
-  const url = `http://127.0.0.1:8000/api/rest-auth/login/`
-  let response = await fetch(url, {
+  const url = `http://127.0.0.1:8000/api/rest-auth/`
+  let response = await fetch(`${url}login/`, {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify(loginObject)
   })
-  let data = await response.json()
-  return data
+  console.log(response)
+  let key = await response.json()
+  return key
 }
 
-const getUserID = async (userKey) => {
-  const url = `http://127.0.0.1:8000/api/rest-auth/login/`
-  let response = await fetch(url, {
+const createUser = async (userObject) => {
+  const url = `http://127.0.0.1:8000/api/rest-auth/`
+  let response = await fetch(`${url}registration/`, {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify(userKey)
+    body: JSON.stringify(userObject)
   })
+  console.log(response)
   let data = await response.json()
+  console.log(data)
   return data
 }
 
+
+
 export default {
   login: login,
-  getUserID: getUserID,
+  createUser: createUser
 }
-
-// const addWine = (wineObject) => {
-//   return fetch('https://cors-anywhere.herokuapp.com/https://wineapi-cp.herokuapp.com/wines/', {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: JSON.stringify(wineObject)
-//   })
-// }

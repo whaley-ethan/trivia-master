@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import dbAPI from '../api/dbAPI'
 
-const LoginPage = ({ setUser }) => {
+const LoginPage = ({ history, setUser }) => {
 
   const register = () => {
-    return null
+    history.push('/register')
   }
 
   const login = async (event) => {
@@ -13,10 +13,9 @@ const LoginPage = ({ setUser }) => {
       "username": event.target.username.value,
       "password": event.target.password.value
     }
-    const userKey = await dbAPI.login(loginInfo)
-    // const userID = await db.getUserID(userKey.key)
-    
-    setUser(userKey.key)
+    const user = await dbAPI.login(loginInfo)
+    console.log(user)
+    setUser(user)
 
   }
   return (
