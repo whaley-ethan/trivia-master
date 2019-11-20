@@ -5,6 +5,12 @@ const fetchQuestions = async (category, difficulty, amount) => {
   return data
 }
 
+const getQuote = async () => {
+  let response = await fetch ('http://quotes.stormconsultancy.co.uk/random.json')
+  let data = await response.json()
+  return data
+}
 export default {
-  fetchQuestions: fetchQuestions
+  fetchQuestions: fetchQuestions,
+  getQuote: getQuote,
 }

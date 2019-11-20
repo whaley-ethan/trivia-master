@@ -9,6 +9,7 @@ import PersonalRecordsPage from './pages/PersonalRecordsPage'
 import StatisticsPage from './pages/StatisticsPage'
 import NavBar from './components/NavBar/NavBar'
 import RegistrationPage from './pages/RegistrationPage'
+import RandomQuote from './components/RandomQuote'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -37,7 +38,8 @@ function App() {
           <Route path='/statistics' render={(props) => <StatisticsPage {...props} user={user} />} />
 
           <Route path='/register' render={(props) => <RegistrationPage {...props} setUser={setUser} />} />
-          
+          <hr/>
+          <RandomQuote />
         </div>
       </Router>
     </div>

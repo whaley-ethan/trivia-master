@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Question({ quest, handleClick}) {
+const Question = ({ quest, handleClick}) => {
 
   const decodeHTML = (html) => {
     let txt = document.createElement('textarea');
