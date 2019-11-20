@@ -25,7 +25,7 @@ const HomePage = ({ history }) => {
           state: {
             category: category,
             difficulty: difficulty,
-            amount: amount
+            amount: amount,
           }
         }}>Submit</Link>
       </form>

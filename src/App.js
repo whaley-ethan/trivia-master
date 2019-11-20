@@ -12,6 +12,7 @@ import RegistrationPage from './pages/RegistrationPage'
 
 function App() {
   const [user, setUser] = useState(null)
+
   const componentOrLogin = (Component) => {
     if (user){
       return (props) => <Component {...props} user={user} />
@@ -26,10 +27,15 @@ function App() {
           <NavBar user={user}/>
           <hr/>
           <Route exact path='/' render={componentOrLogin(HomePage)} />
-          <Route path='/quiz' component={QuestionPage} />
+
+          <Route path='/quiz' render={(props) => <QuestionPage {...props} user={user} />} />
+
           <Route path='/global_records' component={RecordsPage} />
+
           <Route path='/personal_records' render={(props) => <PersonalRecordsPage {...props} user={user} />} />
-          <Route path='/statistics' component={StatisticsPage} />
+
+          <Route path='/statistics' render={(props) => <StatisticsPage {...props} user={user} />} />
+
           <Route path='/register' render={(props) => <RegistrationPage {...props} setUser={setUser} />} />
           
         </div>
