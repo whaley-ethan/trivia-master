@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import dbAPI from '../api/dbAPI'
+import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 const LoginPage = ({ history, setUser }) => {
 
@@ -14,22 +15,36 @@ const LoginPage = ({ history, setUser }) => {
       "password": event.target.password.value
     }
     const user = await dbAPI.login(loginInfo)
-    console.log(user)
     setUser(user)
 
   }
   return (
     <><h1>You must login to play</h1>
 
-      <form onSubmit={(e) => login(e)}>
-        Username:
-        <input type="text" id="username" name="username" /><br/>
-        Password:
-        <input type="password" id="pass" name="password" /><br/>
-        <br /><br />
-        <button type="submit">Submit</button>
-      </form>
-      <button onClick={() => register()}>Register</button>
+      <Form onSubmit = {(e) => login(e)}>
+        <FormGroup row>
+          <Label for="username" sm={2}>Username</Label>
+          <Col sm={10}>
+            <Input type="username" name="username" id="exampleEmail" />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="password" sm={2}>Password</Label>
+          <Col sm={10}>
+            <Input type="password" name="password" id="password"/>
+          </Col>
+        </FormGroup>
+        <FormGroup check row>
+        <Col sm={{ size: 10, offset: 2 }}>
+          <Button>Submit</Button>
+        </Col>
+      </FormGroup>
+      </Form>
+      <br/>
+      <Col sm={{ size: 10, offset: 2 }}>
+
+      <Button onClick={() => register()}>Register</Button>
+      </Col>
     </>
   )
 }

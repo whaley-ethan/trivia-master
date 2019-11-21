@@ -22,7 +22,7 @@ function App() {
     }
   }
   return (
-    <div>
+    <div className = "text-white">
       <Router>
         <div>
           <NavBar user={user}/>

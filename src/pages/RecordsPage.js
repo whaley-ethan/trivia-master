@@ -17,7 +17,6 @@ function RecordsPage() {
     }
 
     setFastest(answers[i])
-    console.log(fastest)
   } 
   useEffect(
     () => {
@@ -29,12 +28,12 @@ function RecordsPage() {
   )
   return (
     <div>
-      <h1>RecordsPage</h1>
-      <h2>Fastest Answer:</h2>
+
+      <h1>Fastest correct answer:</h1>
       <h3>Category:</h3>
       <p>{fastest && fastest.category}</p>
       <h3>Time:</h3>
-      <p>{fastest && fastest.time / 1000} seconds</p>
+      <p>{fastest && Number((fastest.time / 1000).toFixed(2))} seconds</p>
     </div>
   )
 }
