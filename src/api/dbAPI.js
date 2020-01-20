@@ -1,4 +1,4 @@
-const url = `https://trivia-master-backend.herokuapp.com/api/`
+const url = `http://localhost:8000/`
 
 const login = async (loginObject) => {
   let response = await fetch(`${url}rest-auth/login/`, {
