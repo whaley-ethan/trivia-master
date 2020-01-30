@@ -1,4 +1,6 @@
-const url = `http://localhost:8000/`
+import { getQueriesForElement } from "@testing-library/react"
+
+const url = `http://localhost:8000/api/`
 
 const login = async (loginObject) => {
   let response = await fetch(`${url}rest-auth/login/`, {
@@ -8,16 +10,27 @@ const login = async (loginObject) => {
     method: 'POST',
     body: JSON.stringify(loginObject)
   })
-  let key = await response.json()
-  
-  let response2 = await fetch(`${url}users/`)
-  let users = await response2.json()
-  for (let user of users) {
-    if (user.username === loginObject.username) {
-      key['userID'] = user['id']
+  let token = await response.json()
+
+  // TODO: add in validation of login here
+
+  const authToken = `Token ${token.key}`
+  window.localStorage.setItem('authToken', authToken)
+  let user = getUser(authToken)
+  return user
+}
+
+const getUser = async (authToken) => {
+  let response = await fetch(`${url}rest-auth/user/`, {
+    method: 'GET',
+    withCredentials: true,
+    credentials: 'include',
+    headers: {
+      'Authorization': authToken
     }
-  } 
-  return key
+  })
+  let user = await response.json()
+  return user
 }
 
 const createUser = async (userObject) => {
@@ -30,18 +43,22 @@ const createUser = async (userObject) => {
     body: JSON.stringify(userObject)
   })
   let data = await response.json()
+  console.log(data)
   return data
 }
 
-const createQuiz = async (userID) => {
+const createQuiz = async (authToken) => {
 
   let response = await fetch(`${url}quiz/`, {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify({"user": userID,
-  "answers": []})
+    withCredentials: true,
+    credentials: 'include',
+    headers: {
+      'Authorization': authToken
+    }
   })
   let data = await response.json()
   return data
@@ -72,8 +89,22 @@ const getAllAnswers = async () => {
   return answers
 }
 
+const logout = async () => {
+  let response = await fetch(`${url}rest-auth/logout/`, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+  })
+  let data = await response.json()
+  console.log(data)
+  return data
+}
+
 export default {
+  logout: logout,
   login: login,
+  getUser: getUser,
   createUser: createUser,
   createQuiz: createQuiz,
   createAnswer: createAnswer,

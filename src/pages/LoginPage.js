@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import dbAPI from '../api/dbAPI'
 import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import PersonalRecordsPage from './PersonalRecordsPage';
 
-const LoginPage = ({ history, setUser }) => {
+const LoginPage = ({ history, setUser}) => {
 
   const register = () => {
     history.push('/register')
@@ -15,7 +16,10 @@ const LoginPage = ({ history, setUser }) => {
       "password": event.target.password.value
     }
     const user = await dbAPI.login(loginInfo)
+    console.log(user.status)
     setUser(user)
+    
+    history.push('/home')
 
   }
   return (

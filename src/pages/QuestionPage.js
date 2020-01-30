@@ -19,7 +19,7 @@ const QuestionPage = (props) => {
   const { amount, category, difficulty } = (props.location.state ? props.location.state : {amount: null, category: null, difficulty: null})
 
   const getQuestions = async (category, difficulty, amount) => {
-    const newQuiz = await dbAPI.createQuiz((user) ?user.userID: 5)
+    const newQuiz = await dbAPI.createQuiz((user) ? window.localStorage.getItem('authToken'): 1)
     setQuiz(newQuiz.id)
     let response = await api.fetchQuestions(category, difficulty, amount)
     let questions = response.results

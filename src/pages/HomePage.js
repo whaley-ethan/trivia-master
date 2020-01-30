@@ -5,14 +5,14 @@ import AmountSelector from '../components/AmountSelector/AmountSelector'
 import CategorySelector from '../components/CategorySelector/CategorySelector'
 import DifficultySelector from '../components/DifficultySelector/DifficultySelector'
 
-const HomePage = ({ history }) => {
+const HomePage = (props) => {
   const [category, setCategory] = useState('9') // 9 is general knowledge
   const [difficulty, setDifficulty] = useState('easy')
   const [amount, setAmount] = useState(1)
 
   return (
     <>
-      <h1><badge color="secondary">Welcome to Trivia Master</badge></h1>
+      <h1><Badge color="secondary">Welcome to Trivia Master</Badge></h1>
 
       <h3>Select category, difficulty, and length of quiz (max 10 questions)</h3>
       <form>

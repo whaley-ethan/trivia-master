@@ -7,8 +7,8 @@ const RandomQuote = () => {
   const getRandomQuote = async () => {
     const quote = await api.getQuote()
     let processedQuote = []
-    processedQuote.push(<p>{quote.quote}</p>)
-    processedQuote.push(<p>--{quote.author}</p>)
+    processedQuote.push(<p key="quote">{quote.quote}</p>)
+    processedQuote.push(<p key="author">--{quote.author}</p>)
     setQuote(processedQuote)
   }
   

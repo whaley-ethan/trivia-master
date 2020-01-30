@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-
+import dbAPI from './api/dbAPI'
 import HomePage from './pages/HomePage'
 import QuestionPage from './pages/QuestionPage'
 import LoginPage from './pages/LoginPage'
@@ -14,21 +14,30 @@ import RandomQuote from './components/RandomQuote'
 function App() {
   const [user, setUser] = useState(null)
 
-  const componentOrLogin = (Component) => {
-    if (user){
-      return (props) => <Component {...props} user={user} />
-    } else {
-      return (props) => <LoginPage {...props} setUser={setUser} />
+  useEffect(() => {
+    let newUser = null
+    
+    const fetchUser = async (authToken) => {
+      newUser = await dbAPI.getUser(authToken)
+      setUser(newUser)
     }
-  }
+    if (window.localStorage.getItem('authToken') !== null && user == null) {
+      newUser = fetchUser(window.localStorage.getItem('authToken'))
+    }
+   
+    console.log(user)
+  }, [user])
+
   return (
     <div className = "text-white">
       <Router>
         <div>
           <NavBar user={user}/>
           <hr/>
-          <Route exact path='/' render={componentOrLogin(HomePage)} />
-
+          <Route exact path='/' render={(props) => <LoginPage {...props} setUser={setUser} />} />
+          
+          <Route exact path='/home' render={(props) => <HomePage {...props} user={user} />} />
+          
           <Route path='/quiz' render={(props) => <QuestionPage {...props} user={user} />} />
 
           <Route path='/global_records' component={RecordsPage} />
