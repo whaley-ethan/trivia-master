@@ -16,12 +16,12 @@ const LoginPage = ({ history, setUser}) => {
       "password": event.target.password.value
     }
     const user = await dbAPI.login(loginInfo)
-    console.log(user.status)
-    setUser(user)
-    
-    history.push('/home')
-
+    if (user) {
+      setUser(user)
+      history.push('/home')
+    }
   }
+  
   return (
     <><h1>You must login to play</h1>
 

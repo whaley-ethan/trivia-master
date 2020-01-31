@@ -10,14 +10,23 @@ const login = async (loginObject) => {
     method: 'POST',
     body: JSON.stringify(loginObject)
   })
-  let token = await response.json()
+  if (response.status == 200) {
+    let token = await response.json()
+    const authToken = `Token ${token.key}`
+    window.localStorage.setItem('authToken', authToken)
+    let user = getUser(authToken)
+    return user
+  } else {
+    return null
+  }
+}
 
-  // TODO: add in validation of login here
-
-  const authToken = `Token ${token.key}`
-  window.localStorage.setItem('authToken', authToken)
-  let user = getUser(authToken)
-  return user
+const getCSRFToken = async () => {
+  const response = await fetch(`${url}user/csrf`, {
+    credentials: 'include',
+  })
+  const data = await response.json()
+  return data.csrfToken
 }
 
 const getUser = async (authToken) => {
@@ -57,32 +66,39 @@ const createQuiz = async (authToken) => {
     withCredentials: true,
     credentials: 'include',
     headers: {
-      'Authorization': authToken
+      'Authorization': authToken,
+      'X-CSRFToken': await getCSRFToken()
     }
   })
   let data = await response.json()
   return data
 }
 
-const createAnswer = async (answerInfo) => {
+const createAnswer = async (answerInfo, authToken) => {
 
   let response = await fetch(`${url}answer/`, {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': authToken,
+      'X-CSRFToken': await getCSRFToken()
     },
     method: 'POST',
+    withCredentials: true,
+    credentials: 'include',
     body: JSON.stringify(answerInfo)
   })
   let data = await response.json()
   return data
 }
 
+// May Not be Needed after refactoring statistics -- moved to back end
 const getAllQuizes = async () => {
   let response = await fetch(`${url}quiz/`)
   let quizes = await response.json()
   return quizes
 }
 
+// May Not be Needed after refactoring statistics -- moved to back end
 const getAllAnswers = async () => {
   let response = await fetch(`${url}answer/`)
   let answers = await response.json()

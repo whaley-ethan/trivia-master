@@ -38,26 +38,15 @@ const QuestionPage = (props) => {
     if (!answered) {
       const stopTime = Date.now()
       setAnswered(true)
-      let newScore = {}
-      if (isRightAnswer) {
-        newScore = {
-          "quiz": quiz,
-          "category": questions[currentQuestion].category,
-          "difficulty": questions[currentQuestion].difficulty,
-          "didGetRight": true,
-          "time": stopTime - startTime
-        }
-      } else {
-        newScore = {
-          "quiz": quiz,
-          "category": questions[currentQuestion].category,
-          "difficulty": questions[currentQuestion].difficulty,
-          "didGetRight": false,
-          "time": stopTime - startTime
-        }
-        
+      let newScore = {
+        "quiz": quiz,
+        "category": questions[currentQuestion].category,
+        "difficulty": questions[currentQuestion].difficulty,
+        "didGetRight": isRightAnswer,
+        "time": stopTime - startTime
       }
-      let response = await dbAPI.createAnswer(newScore)
+      let response = await dbAPI.createAnswer(newScore, window.localStorage.getItem('authToken'))
+      console.log(response)
       setScore(score.concat(newScore))
     }
   }
@@ -81,7 +70,7 @@ const QuestionPage = (props) => {
     )
   } else {
     return(
-      < Redirect to='/' />
+      < Redirect to='/home' />
     )
   }
 }

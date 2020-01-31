@@ -6,7 +6,7 @@ import { Navbar } from 'reactstrap'
 import dbAPI from '../../api/dbAPI'
 
 
-function NavBar(props) {
+function NavBar({user, setUser}) {
   const createNavItems = () => {
     return navbar.map((section, index) => {
       return (
@@ -17,6 +17,7 @@ function NavBar(props) {
 
   const logout = async () => {
     window.localStorage.clear()
+    setUser(null)
     let response = await dbAPI.logout()
     console.log(response)
 
@@ -25,9 +26,8 @@ function NavBar(props) {
     <div>
       <Navbar>
         { createNavItems() }
-        <b><Link to='/'>{props.user ? 'NEW GAME': 'LOGIN'}</Link></b>
-        {/* need logout to mutate props or refactor to not use props  -- maybe have homepage useEffect check if window.localStorage exists then mutate there */}
-        {props.user && <b><Link to='/' onClick={() => logout()}>LOGOUT</Link></b>}
+        <b>{user ? <Link to='/home'>NEW GAME</Link>: <Link to='/'>LOGIN</Link>}</b>
+        {user && <b><Link to='/' onClick={() => logout()}>LOGOUT</Link></b>}
       </Navbar>
     </div>
   )

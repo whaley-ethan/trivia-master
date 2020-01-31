@@ -32,7 +32,7 @@ function App() {
     <div className = "text-white">
       <Router>
         <div>
-          <NavBar user={user}/>
+          <NavBar user={user} setUser={setUser}/>
           <hr/>
           <Route exact path='/' render={(props) => <LoginPage {...props} setUser={setUser} />} />
           
