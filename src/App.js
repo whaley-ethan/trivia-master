@@ -24,8 +24,7 @@ function App() {
     if (window.localStorage.getItem('authToken') !== null && user == null) {
       newUser = fetchUser(window.localStorage.getItem('authToken'))
     }
-   
-    console.log(user)
+    
   }, [user])
 
   return (

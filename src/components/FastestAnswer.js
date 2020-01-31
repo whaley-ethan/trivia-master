@@ -1,55 +1,19 @@
 import React, {useState, useEffect } from 'react'
 import dbAPI from '../api/dbAPI'
 
-const FastestAnswer = (props) => {
-  const [fastest, setFastest] = useState(null)
+const FastestAnswer = ({ userStats }) => {
+  const bestAnswer = userStats.own_five_fastest_right_answers[0] ? userStats.own_five_fastest_right_answers[0] : null 
 
-  const getUserData = async () => {
-    const id = (props.user) ? props.user.userID : 4
-    const allQuizes = await dbAPI.getAllQuizes()
-    const userQuizes = await allQuizes.filter(quiz => quiz.user === id)
-    const userQuizIDs = await userQuizes.map(quiz => quiz.id)
-    const allAnswers = await dbAPI.getAllAnswers()
-    const userAnswers = await allAnswers.filter(answer => userQuizIDs.includes(answer.quiz))
-    return userAnswers
-
-  }
-
-  const getFastestRightAnswer = async () => {
-    let answers = await getUserData()
-    await answers.sort((a,b) => a.time-b.time )
-    let found = false
-    let i = 0
-    while(!found){
-      found = answers[i].didGetRight
-      if (!found){
-        i++
-      }
-    }
-
-    setFastest(answers[i])
-  }
-
-  useEffect(
-    () => {
-      if (!fastest) {
-        getFastestRightAnswer()
-        
-      }
-    }
-  )
-
-
-  if (!props.user) {
+  if (!userStats) {
     return <></>
   }
   return (
     <div>
       <h2>Fastest Answer:</h2>
       <h3>Category:</h3>
-      <p>{fastest && fastest.category}</p>
+      <p>{bestAnswer && bestAnswer.category}</p>
       <h3>Time:</h3>
-      <p>{fastest && Number((fastest.time / 1000).toFixed(2))} seconds</p>
+      <p>{bestAnswer && bestAnswer.time.toFixed(2)} seconds</p>
     </div>
   )
 }

@@ -92,15 +92,15 @@ const createAnswer = async (answerInfo, authToken) => {
 }
 
 // May Not be Needed after refactoring statistics -- moved to back end
+// add in endpoint to get a single user's statistics 
 const getAllQuizes = async () => {
   let response = await fetch(`${url}quiz/`)
   let quizes = await response.json()
   return quizes
 }
 
-// May Not be Needed after refactoring statistics -- moved to back end
-const getAllAnswers = async () => {
-  let response = await fetch(`${url}answer/`)
+const getUserStats = async (pk) => {
+  let response = await fetch(`${url}user/statistics/${pk}/`)
   let answers = await response.json()
   return answers
 }
@@ -124,6 +124,6 @@ export default {
   createUser: createUser,
   createQuiz: createQuiz,
   createAnswer: createAnswer,
-  getAllAnswers: getAllAnswers,
+  getUserStats: getUserStats,
   getAllQuizes: getAllQuizes,
 }

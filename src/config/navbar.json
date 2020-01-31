@@ -1,15 +1,18 @@
 [
     {
       "label": "STATISTICS",
-      "value": "statistics"
+      "value": "statistics",
+      "requiredLogin": true
     },
     {
       "label": "PERSONAL RECORDS",
-      "value": "personal_records"
+      "value": "personal_records",
+      "requiredLogin": true
     },
     {
       "label": "GLOBAL RECORDS",
-      "value": "global_records"
+      "value": "global_records",
+      "requiredLogin": false
     }
   ]
   
